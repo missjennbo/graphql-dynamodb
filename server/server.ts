@@ -2,11 +2,11 @@ import {graphqlHTTP} from 'express-graphql';
 import express from 'express';
 import {buildSchema} from 'graphql';
 import {v4 as uuid} from 'uuid';
-import {getAllUser} from './mongoApi';
+import {createUser, getAllUser, getUserByUsername, updateUser} from './mongoApi';
 
 const schema = buildSchema(`
   type User {
-    id: ID!
+    _id: ID!
     name: String
     score: Int
   }
@@ -20,13 +20,11 @@ const schema = buildSchema(`
   }
 `);
 
-interface User {
-    id: string;
+export interface User {
+    _id: string;
     name: string;
     score: number;
 }
-
-const userList: User[] = [];
 
 const root = {
     // {
@@ -47,15 +45,8 @@ const root = {
     //     }
     // }
     increaseScore: async ({name}: User) => {
-        const existing = userList.findIndex((user) => user.name === name);
-        if (existing !== -1) {
-            userList[existing].score++;
-            return userList[existing];
-        }
-        const id = uuid();
-        const newUser = {id, name, score: 1};
-        userList.push(newUser);
-        return newUser;
+        const existingUser = await getUserByUsername(name);
+        existingUser ? await updateUser(existingUser) : await createUser(name);
     },
 };
 

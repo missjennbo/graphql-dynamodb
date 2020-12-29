@@ -1,18 +1,19 @@
-import {MongoClient} from 'mongodb';
+import {MongoClient, UpdateWriteOpResult} from 'mongodb';
 import {v4 as uuid} from 'uuid';
+import {User} from './server';
 
 const mongoUrl = 'mongodb://localhost:27017/';
 
 const ticTacToeDatabase = 'ticTacToe';
 const userCollection = 'user';
 
-export const getAllUser = async () => {
+export const getAllUser = async (): Promise<User[] | undefined> => {
     let mongoClient, db;
     try {
         mongoClient = await MongoClient.connect(mongoUrl, {useNewUrlParser: true});
         db = mongoClient.db(ticTacToeDatabase);
         const coll = db.collection(userCollection);
-        return await coll.find().toArray();
+        return await coll.find({}).toArray();
     } catch (e) {
         console.error(e);
     } finally {
@@ -20,7 +21,7 @@ export const getAllUser = async () => {
     }
 };
 
-export const getUserByUsername = async (name: string) => {
+export const getUserByUsername = async (name: string): Promise<User | null | undefined> => {
     let mongoClient, db;
     try {
         mongoClient = await MongoClient.connect(mongoUrl, {useNewUrlParser: true});
@@ -34,14 +35,14 @@ export const getUserByUsername = async (name: string) => {
     }
 };
 
-export const createUser = async (name: string) => {
+export const createUser = async (name: string): Promise<void> => {
     let mongoClient, db;
     try {
         mongoClient = await MongoClient.connect(mongoUrl, {useNewUrlParser: true});
         db = mongoClient.db(ticTacToeDatabase);
         const coll = db.collection(userCollection);
         const id = uuid();
-        return await coll.insertOne({id, name, score: 1});
+        await coll.insertOne({id, name, score: 1});
     } catch (e) {
         console.error(e);
     } finally {
@@ -49,13 +50,13 @@ export const createUser = async (name: string) => {
     }
 };
 
-export const updateUser = async (name: string, score: number) => {
+export const updateUser = async (user: User): Promise<void> => {
     let mongoClient, db;
     try {
         mongoClient = await MongoClient.connect(mongoUrl, {useNewUrlParser: true});
         db = mongoClient.db(ticTacToeDatabase);
         const coll = db.collection(userCollection);
-        return await coll.findOneAndUpdate({name}, {score});
+        await coll.updateOne({id: user._id}, {$set: {score: ++user.score}});
     } catch (e) {
         console.error(e);
     } finally {
