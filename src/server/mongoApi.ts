@@ -1,6 +1,6 @@
 import {MongoClient, UpdateWriteOpResult} from 'mongodb';
 import {v4 as uuid} from 'uuid';
-import {User} from './server';
+import {User} from '../types/types';
 
 const mongoUrl = 'mongodb://localhost:27017/';
 

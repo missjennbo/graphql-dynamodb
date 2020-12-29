@@ -3,6 +3,7 @@ import express from 'express';
 import {buildSchema} from 'graphql';
 import {v4 as uuid} from 'uuid';
 import {createUser, getAllUser, getUserByUsername, updateUser} from './mongoApi';
+import {User} from '../types/types';
 
 const schema = buildSchema(`
   type User {
@@ -19,12 +20,6 @@ const schema = buildSchema(`
     increaseScore(name: String): User
   }
 `);
-
-export interface User {
-    _id: string;
-    name: string;
-    score: number;
-}
 
 const root = {
     // {

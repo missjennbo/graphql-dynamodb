@@ -9,7 +9,7 @@
         "start": "nodemon --exec babel-node build/server.js",
         "pretty-quick-staged": "pretty-quick --staged",
         "tsc": "node_modules/.bin/tsc",
-        "lint": "node_modules/.bin/eslint server/* --ext .js,.ts",
+        "lint": "node_modules/.bin/eslint src/server/* --ext .js,.ts",
         "check": "npm-run-all pretty-quick-staged tsc lint"
     },
     "author": "",
