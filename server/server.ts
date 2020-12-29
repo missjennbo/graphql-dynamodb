@@ -1,7 +1,8 @@
-import {getAllUser, getUserByUsername} from './mongoApi';
-import express from 'express';
 import {graphqlHTTP} from 'express-graphql';
+import express from 'express';
 import {buildSchema} from 'graphql';
+import {v4 as uuid} from 'uuid';
+import {getAllUser} from './mongoApi';
 
 const schema = buildSchema(`
   type User {
@@ -19,15 +20,13 @@ const schema = buildSchema(`
   }
 `);
 
-class User {
-    constructor(id, name, score) {
-        this.id = id;
-        this.name = name;
-        this.score = score;
-    }
+interface User {
+    id: string;
+    name: string;
+    score: number;
 }
 
-let userList = [];
+const userList: User[] = [];
 
 const root = {
     // {
@@ -47,14 +46,14 @@ const root = {
     //         score
     //     }
     // }
-    increaseScore: async ({name}) => {
+    increaseScore: async ({name}: User) => {
         const existing = userList.findIndex((user) => user.name === name);
         if (existing !== -1) {
             userList[existing].score++;
             return userList[existing];
         }
-        const id = require('crypto').randomBytes(10).toString('hex');
-        const newUser = new User(id, name, 1);
+        const id = uuid();
+        const newUser = {id, name, score: 1};
         userList.push(newUser);
         return newUser;
     },
