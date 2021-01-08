@@ -1,7 +1,6 @@
 import {graphqlHTTP} from 'express-graphql';
 import express from 'express';
 import {buildSchema} from 'graphql';
-import {v4 as uuid} from 'uuid';
 import {createUser, getAllUser, getUserByUsername, updateUser} from './mongoApi';
 import {User} from '../types/types';
 
@@ -54,6 +53,6 @@ app.use(
         graphiql: true,
     })
 );
-app.listen(4000, () => {
-    console.log('Running a GraphQL API server at localhost:4000/graphql');
+app.listen(80, () => {
+    console.log('Running a GraphQL API server at localhost:80/graphql');
 });
