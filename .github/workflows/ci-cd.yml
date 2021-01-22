@@ -44,6 +44,9 @@ jobs:
         s3-filename: ['prod-tic-tac-toe-${{ github.sha }}']
 
     needs: buildAndTest
+    env:
+      AWS_DEFAULT_REGION: eu-central-1
+      AWS_REGION: eu-central-1
     steps:
       - uses: actions/checkout@v2
 
@@ -87,6 +90,9 @@ jobs:
           --ignore-hidden-files \
           --s3-location s3://${{ matrix.s3-bucket }}/${{ matrix.s3-filename }}.zip \
           --source .
+        env:
+          AWS_DEFAULT_REGION: eu-central-1
+          AWS_REGION: eu-central-1
 
       # Create deployment to CodeDeploy
       - name: AWS Create Deployment
