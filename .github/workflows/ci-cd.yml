@@ -103,3 +103,6 @@ jobs:
            --deployment-group-name ${{ matrix.deploy-group }} \
            --file-exists-behavior OVERWRITE \
            --s3-location bucket=${{ matrix.s3-bucket }},key=${{ matrix.s3-filename }}.zip,bundleType=zip \
+        env:
+          AWS_DEFAULT_REGION: eu-central-1
+          AWS_REGION: eu-central-1
