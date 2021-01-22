@@ -74,6 +74,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-southeast-1
 
+      # List applications
+      - name: List apps
+        run: aws deploy list-applications --region eu-central-1
+
       # Deploy push to AWS S3
       - name: AWS Deploy push
         run: |
