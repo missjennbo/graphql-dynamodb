@@ -54,5 +54,5 @@ app.use(
     })
 );
 app.listen(80, () => {
-    console.log('Running a GraphQL API server at localhost:80/graphql');
+    console.log('Running a GraphQL API server at http://localhost:80/graphql');
 });
