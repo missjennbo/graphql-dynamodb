@@ -15,3 +15,7 @@ hooks:
     - location: scripts/reload-pm2.sh
       timeout: 300
       runas: ubuntu
+  ApplicationStop:
+    - location: scripts/stop-pm2.sh
+      timeout: 300
+      runas: ubuntu
