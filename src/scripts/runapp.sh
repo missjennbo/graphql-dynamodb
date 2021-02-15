@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo node /home/ubuntu/tictactoe/build/server/server.js
+sudo pm2 --name tictactoe start npm -- start
