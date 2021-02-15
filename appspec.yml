@@ -16,9 +16,6 @@ hooks:
       timeout: 300
       runas: ubuntu
   AfterInstall:
-    - location: src/scripts/dependencies.sh
-      timeout: 300
-      runas: ubuntu
     - location: src/scripts/runapp.sh
       timeout: 300
       runas: ubuntu
