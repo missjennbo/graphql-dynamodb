@@ -1,3 +1,3 @@
 #!/bin/bash
 sudo rm -rf /home/ubuntu/tictactoe
-sudo killall node
+sudo pkill node
