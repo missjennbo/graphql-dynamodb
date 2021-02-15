@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /home/ubuntu/graphql-mongodb
+cd /home/ubuntu/tictactoe
 sudo npm install

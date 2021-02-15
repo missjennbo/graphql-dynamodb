@@ -1,9 +1,9 @@
 [Unit]
-Description=mongodb-graphql
+Description=tictactoe
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/node /home/ubuntu/mongodb-graphql/src/server/server.js
+ExecStart=/usr/bin/node /home/ubuntu/tictactoe/src/server/server.js
 Restart=always
 RestartSec=500ms
 StartLimitInterval=0
@@ -11,7 +11,7 @@ User=nobody
 Group=nogroup
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-WorkingDirectory=/home/ubuntu/mongodb-graphql
+WorkingDirectory=/home/ubuntu/tictactoe
 
 [Install]
 WantedBy=multi-use.target

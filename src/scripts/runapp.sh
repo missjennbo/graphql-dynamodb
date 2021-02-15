@@ -1,10 +1,10 @@
 #!/bin/bash
-cp /home/ubuntu/graphql-mongodb/graphql-mongodb.service /etc/systemd/system
+cp /home/ubuntu/tictactoe/tictactoe.service /etc/systemd/system
 ##add exceutable permissions to express app
-sudo chmod +x /home/ubuntu/graphql-mongodb/src/server/server.js
+sudo chmod +x /home/ubuntu/tictactoe/src/server/server.js
 ##Allows any users to write the app folder. Useful if using fs within the app
-sudo chmod go+w /home/ubuntu/graphql-mongodb
+sudo chmod go+w /home/ubuntu/tictactoe
 ##Launches the express app
 sudo systemctl daemon-reload
-sudo systemctl start graphql-mongodb
-sudo systemctl enable graphql-mongodb
+sudo systemctl start tictactoe
+sudo systemctl enable tictactoe

@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo rm -rf /home/ubuntu/graphql-mongodb
+sudo rm -rf /home/ubuntu/tictactoe

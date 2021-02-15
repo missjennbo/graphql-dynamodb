@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/graphql-mongodb
+    destination: /home/ubuntu/tictactoe
 permissions:
   - object: /home/ubuntu
     owner: ubuntu
@@ -12,13 +12,13 @@ permissions:
       - file
 hooks:
   BeforeInstall:
-    - location: scripts/cleanup.sh
+    - location: src/scripts/cleanup.sh
       timeout: 300
       runas: ubuntu
   AfterInstall:
-    - location: scripts/dependencies.sh
+    - location: src/scripts/dependencies.sh
       timeout: 300
       runas: ubuntu
-    - location: scripts/runapp.sh
+    - location: src/scripts/runapp.sh
       timeout: 300
       runas: ubuntu
