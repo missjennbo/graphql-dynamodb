@@ -1,3 +1,3 @@
 #!/bin/bash
 cd /home/ubuntu/tictactoe
-sudo node build/server/server.js &
+sudo npm run start
