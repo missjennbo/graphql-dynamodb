@@ -81,6 +81,10 @@ jobs:
       - name: List apps
         run: aws deploy list-applications --region eu-central-1
 
+      # Cleanup AWS S3 bucket
+      - name: AWS S3 cleanup
+        run: aws s3 rm --recursive s3://${{ matrix.s3-bucket }}
+
       # Deploy push to AWS S3
       - name: AWS Deploy push
         run: |
