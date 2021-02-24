@@ -24,49 +24,18 @@ const schema = buildSchema(`
 `);
 
 const root = {
-    // {
-    //   user(name: "missjennbo") {
-    //     id,
-    //     name
-    //     score
-    //   }
-    // }
     user: async ({name}: User) => {
         return await getUserByUsername(name);
     },
-    // {
-    //   users {
-    //     id,
-    //     name
-    //     score
-    //   }
-    // }
     users: async () => {
         return await getAllUser();
     },
-    // mutation {
-    //     createUser(name: "maluc") {
-    //         id
-    //         name
-    //         score
-    //     }
-    // }
     createUser: async ({name}: User) => {
         return await createUser(name);
     },
-    // mutation {
-    //     deleteUser(name: "maluc")
-    // }
     deleteUser: async ({name}: User) => {
         return await deleteUser(name);
     },
-    // mutation {
-    //     increaseScore(name: "maluc") {
-    //         id
-    //         name
-    //         score
-    //     }
-    // }
     increaseScore: async ({name}: User) => {
         const existingUser = await getUserByUsername(name);
         existingUser ? await increaseScore(existingUser) : await createUser(name);
