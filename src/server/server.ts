@@ -6,7 +6,7 @@ import {User} from '../types/types';
 
 const schema = buildSchema(`
   type User {
-    id: ID
+    id: String
     name: String
     score: Int
   }

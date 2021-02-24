@@ -9,13 +9,6 @@ AWS.config.update({region: 'eu-central-1'});
 const TABLE_NAME: string = 'tictactoe-user';
 const DOC_CLIENT = new DynamoDB.DocumentClient({region: 'eu-central-1'});
 
-// const db = new AWS.DynamoDB.DocumentClient({
-//     accessKeyId: 'AKID',
-//     endpoint: 'http://localhost:8000',
-//     region: 'REGION',
-//     secretAccessKey: 'SECRET'
-// });
-
 export const getAllUser = async (): Promise<User[]> => {
     const params = {
         TableName: TABLE_NAME,
