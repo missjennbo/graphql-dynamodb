@@ -7,7 +7,7 @@ import {v4} from 'uuid';
 AWS.config.update({region: 'eu-central-1'});
 
 const TABLE_NAME: string = 'tictactoe-user';
-const DOC_CLIENT = new DynamoDB.DocumentClient({endpoint: 'http://localhost:8000', region: 'eu-central-1'});
+const DOC_CLIENT = new DynamoDB.DocumentClient({region: 'eu-central-1'});
 
 // const db = new AWS.DynamoDB.DocumentClient({
 //     accessKeyId: 'AKID',
