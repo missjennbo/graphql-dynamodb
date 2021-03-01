@@ -23,11 +23,11 @@ export const getUserByUsername = async (username: String): Promise<User> => {
     // type matching issue in aws-sdk package
     const params: any = {
         TableName: TABLE_NAME,
-        IndexName: 'name-index',
+        IndexName: 'username-index',
         Limit: 100,
-        KeyConditionExpression: 'name = :v_name',
+        KeyConditionExpression: 'username = :v_username',
         ExpressionAttributeValues: {
-            ':v_name': username,
+            ':v_username': username,
         },
     };
     return DOC_CLIENT.query(params)
@@ -44,7 +44,7 @@ export const createUser = async (username: String): Promise<PutItemOutput> => {
         TableName: TABLE_NAME,
         Item: {
             id: v4(),
-            name: username,
+            username,
             score: 0,
         },
     };

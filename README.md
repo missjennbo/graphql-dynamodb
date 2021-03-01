@@ -13,43 +13,47 @@ Simple GraphQL API using DynamoDB to manage user scores for my TicTacToe sample 
 {
     users {
         id,
-        name
+        username
         score
     }
 }
 ```
 
-* getUserByUsername(name: string): User
+* getUserByUsername(username: string): User
 ``` 
 {
-    user(name: "missjennbo") {
+    user(username: "missjennbo") {
         id,
-        name
+        username,
         score
     }
 }
 ```
 
-* createUser(name: String): User
+* createUser(username: String): User
 ``` 
 mutation {
-    createUser(name: "maluc")
+    createUser(username: "maluc") {
+        id,
+        username,
+        score
+    }
 }
 ```
-* increaseScore(name: String): User
+* increaseScore(username: String): User
 ``` 
 mutation {
-    increaseScore(name: "maluc") {
+    increaseScore(username: "maluc") {
         id
-        name
+        username
         score
     }
 }
 ```
 
-* deleteUser(name: String): Boolean
+* deleteUser(username: String): Boolean
 ``` 
 mutation {
-    deleteUser(name: "maluc")
+    deleteUser(username: "maluc")
 }
 ```
