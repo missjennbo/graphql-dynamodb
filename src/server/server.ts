@@ -19,7 +19,7 @@ const schema = buildSchema(`
   type Mutation {
     createUser(name: String): User,
     increaseScore(name: String): User,
-    deleteUser(name: String): Boolean
+    deleteUserByName(name: String): Boolean
   }
 `);
 
@@ -33,12 +33,16 @@ const root = {
     createUser: async ({name}: User) => {
         return await createUser(name);
     },
-    deleteUser: async ({name}: User) => {
-        return await deleteUser(name);
+    deleteUserByName: async ({name}: User) => {
+        const existingUser = await getUserByUsername(name);
+        if (existingUser) {
+            return deleteUser(existingUser);
+        }
+        return false;
     },
     increaseScore: async ({name}: User) => {
         const existingUser = await getUserByUsername(name);
-        existingUser ? await increaseScore(existingUser) : await createUser(name);
+        return existingUser ? await increaseScore(existingUser) : await createUser(name);
     },
 };
 

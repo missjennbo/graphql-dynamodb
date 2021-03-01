@@ -6,7 +6,7 @@ import {v4} from 'uuid';
 
 AWS.config.update({region: 'eu-central-1'});
 
-const TABLE_NAME: string = 'tictactoe-user';
+const TABLE_NAME = 'tictactoe-user';
 const DOC_CLIENT = new DynamoDB.DocumentClient({region: 'eu-central-1'});
 
 export const getAllUser = async (): Promise<User[]> => {
@@ -23,13 +23,20 @@ export const getUserByUsername = async (username: String): Promise<User> => {
     // type matching issue in aws-sdk package
     const params: any = {
         TableName: TABLE_NAME,
-        Key: {
-            name: username,
+        IndexName: 'name-index',
+        Limit: 100,
+        KeyConditionExpression: 'name = :v_name',
+        ExpressionAttributeValues: {
+            ':v_name': username,
         },
     };
-    return DOC_CLIENT.get(params)
+    return DOC_CLIENT.query(params)
         .promise()
-        .then((user) => user.Item as User);
+        .then((user) => (user.Items ? (user.Items[0] as User) : ''))
+        .catch((error) => {
+            console.log('Error in getUserByUsername: ');
+            return error;
+        });
 };
 
 export const createUser = async (username: String): Promise<PutItemOutput> => {
@@ -48,11 +55,11 @@ export const createUser = async (username: String): Promise<PutItemOutput> => {
         });
 };
 
-export const deleteUser = async (username: String): Promise<boolean> => {
+export const deleteUser = async (user: User): Promise<boolean> => {
     const params: any = {
         TableName: TABLE_NAME,
         Key: {
-            name: username,
+            id: user.id,
         },
     };
     return DOC_CLIENT.delete(params)
@@ -65,7 +72,7 @@ export const increaseScore = async (user: User): Promise<UpdateItemOutput> => {
     const params: any = {
         TableName: TABLE_NAME,
         Key: {
-            name: user.name,
+            id: user.id,
         },
         UpdateExpression: 'set score = :s',
         ExpressionAttributeValues: {
