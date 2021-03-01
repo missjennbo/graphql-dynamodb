@@ -51,9 +51,9 @@ mutation {
 }
 ```
 
-* deleteUser(username: String): Boolean
+* deleteUserByUsername(username: String): Boolean
 ``` 
 mutation {
-    deleteUser(username: "maluc")
+    deleteUserByUsername(username: "maluc")
 }
 ```
