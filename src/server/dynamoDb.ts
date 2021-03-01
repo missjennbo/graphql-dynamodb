@@ -34,7 +34,7 @@ export const getUserByUsername = async (username: String): Promise<User> => {
         .promise()
         .then((user) => (user.Items ? (user.Items[0] as User) : ''))
         .catch((error) => {
-            console.log('Error in getUserByUsername: ');
+            console.log('Error in getUserByUsername - ');
             return error;
         });
 };
