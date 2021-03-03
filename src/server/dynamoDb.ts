@@ -1,7 +1,6 @@
 import {User} from '../types/types';
-import {DynamoDB} from 'aws-sdk';
-import {PutItemOutput, UpdateItemOutput} from 'aws-sdk/clients/dynamodb';
-import AWS from 'aws-sdk';
+import AWS, {DynamoDB} from 'aws-sdk';
+import {UpdateItemOutput} from 'aws-sdk/clients/dynamodb';
 import {v4} from 'uuid';
 
 AWS.config.update({region: 'eu-central-1'});
@@ -39,20 +38,18 @@ export const getUserByUsername = async (username: String): Promise<User> => {
         });
 };
 
-export const createUser = async (username: String): Promise<PutItemOutput> => {
+export const createUser = async (username: string): Promise<User> => {
+    const newUser = {
+        id: v4(),
+        username,
+        score: 0,
+    };
     const params: any = {
         TableName: TABLE_NAME,
-        Item: {
-            id: v4(),
-            username,
-            score: 0,
-        },
+        Item: newUser,
     };
-    return DOC_CLIENT.put(params)
-        .promise()
-        .then((user) => {
-            return user;
-        });
+    await DOC_CLIENT.put(params).promise();
+    return new Promise((resolve) => resolve(newUser));
 };
 
 export const deleteUser = async (user: User): Promise<boolean> => {
