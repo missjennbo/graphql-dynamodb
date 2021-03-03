@@ -41,7 +41,7 @@ export const createUser = async (username: string): Promise<User> => {
     const newUser = {
         id: v4(),
         username,
-        score: 0,
+        score: 1,
     };
     const params: any = {
         TableName: TABLE_NAME,
