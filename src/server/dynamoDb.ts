@@ -1,6 +1,5 @@
 import {User} from '../types/types';
 import AWS, {DynamoDB} from 'aws-sdk';
-import {UpdateItemOutput} from 'aws-sdk/clients/dynamodb';
 import {v4} from 'uuid';
 
 AWS.config.update({region: 'eu-central-1'});
@@ -65,7 +64,7 @@ export const deleteUser = async (user: User): Promise<boolean> => {
         .catch(() => false);
 };
 
-export const increaseScore = async (user: User): Promise<UpdateItemOutput> => {
+export const increaseScore = async (user: User): Promise<User> => {
     const params: any = {
         TableName: TABLE_NAME,
         Key: {
@@ -77,7 +76,6 @@ export const increaseScore = async (user: User): Promise<UpdateItemOutput> => {
         },
         ReturnValues: 'UPDATED_NEW',
     };
-    return DOC_CLIENT.update(params)
-        .promise()
-        .then((user) => user);
+    await DOC_CLIENT.update(params).promise();
+    return new Promise((resolve) => resolve(user));
 };
