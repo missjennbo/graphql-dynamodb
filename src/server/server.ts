@@ -31,14 +31,12 @@ const root = {
         return await getAllUser();
     },
     createUser: async ({username}: User) => {
-        return await createUser(username);
+        const existingUser = await getUserByUsername(username);
+        return existingUser ? existingUser : await createUser(username);
     },
     deleteUserByName: async ({username}: User) => {
         const existingUser = await getUserByUsername(username);
-        if (existingUser) {
-            return deleteUser(existingUser);
-        }
-        return false;
+        return existingUser ? deleteUser(existingUser) : false;
     },
     increaseScore: async ({username}: User) => {
         const existingUser = await getUserByUsername(username);
