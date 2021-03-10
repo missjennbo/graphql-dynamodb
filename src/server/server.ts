@@ -3,6 +3,7 @@ import express from 'express';
 import {buildSchema} from 'graphql';
 import {createUser, deleteUser, getAllUser, getUserByUsername, increaseScore} from './dynamoDb';
 import {User} from '../types/types';
+import cors from 'cors';
 
 const schema = buildSchema(`
   type User {
@@ -45,6 +46,10 @@ const root = {
 };
 
 const app = express();
+
+//enable all cors requests temporally
+app.use(cors());
+
 app.use(
     '/graphql',
     graphqlHTTP({
